@@ -1,19 +1,12 @@
 import 'dart:math';
-
 import 'package:flashcard/core/classes/colors.dart';
 import 'package:flashcard/core/classes/constants.dart';
+import 'package:flashcard/providers/flash_card_provider.dart';
 import 'package:flutter/material.dart';
-
-class FlipCardController {
-  _FlipCardWidgetState? _state;
-
-  Future flipCard() async => _state?.flipCard();
-}
+import 'package:provider/provider.dart';
 
 class FlipCardWidget extends StatefulWidget {
-  final FlipCardController controller;
-
-  const FlipCardWidget({super.key, required this.controller});
+  const FlipCardWidget({super.key});
 
   @override
   State<FlipCardWidget> createState() => _FlipCardWidgetState();
@@ -21,32 +14,20 @@ class FlipCardWidget extends StatefulWidget {
 
 class _FlipCardWidgetState extends State<FlipCardWidget>
     with TickerProviderStateMixin {
-  late AnimationController _animationController;
-  bool _isFlip = false;
+  late FlashCardProvider flashCardProvider;
 
   @override
   void initState() {
+    flashCardProvider = Provider.of<FlashCardProvider>(context, listen: false);
     super.initState();
-
-    _animationController = AnimationController(
-        duration: const Duration(milliseconds: 800), vsync: this);
-    widget.controller._state = this;
   }
-
-  Future flipCard() async {
-    if (_animationController.isAnimating) return;
-    _isFlip = !_isFlip;
-    if (_isFlip) {
-      await _animationController.forward();
-    } else {
-      await _animationController.reverse();
-    }
-  }
-
   @override
-  void dispose() {
-    _animationController.dispose();
-    super.dispose();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    flashCardProvider.loadAnimationController(AnimationController(
+      duration: const Duration(milliseconds: 800),
+      vsync: this,
+    ));
   }
 
   bool isFrontCard(double angle) {
@@ -59,7 +40,9 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       builder: (context, c) {
-        double angle = _animationController.value * -pi;
+        double angle =
+            flashCardProvider.animationController.value  *
+                -pi;
         final transform = Matrix4.identity()
           ..setEntry(2, 3, 0.001)
           ..rotateY(angle);
@@ -75,7 +58,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
                 ),
         );
       },
-      animation: _animationController,
+      animation: flashCardProvider!.animationController,
     );
   }
 }

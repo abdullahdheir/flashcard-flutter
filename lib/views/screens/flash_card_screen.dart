@@ -1,17 +1,21 @@
+import 'dart:developer';
+
 import 'package:flashcard/core/classes/colors.dart';
 import 'package:flashcard/core/classes/constants.dart';
 import 'package:flashcard/core/routes/navigator.dart';
+import 'package:flashcard/providers/flash_card_provider.dart';
 import 'package:flashcard/views/widgets/flip_card_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:linear_progress_bar/linear_progress_bar.dart';
+import 'package:provider/provider.dart';
 
 class FlashCardScreen extends StatelessWidget {
-  FlashCardScreen({super.key});
-
-  FlipCardController controller = FlipCardController();
+  const FlashCardScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    log("from flash card build function");
     return SafeArea(
       bottom: false,
       child: Scaffold(
@@ -63,16 +67,51 @@ class FlashCardScreen extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: FlipCardWidget(
-                      controller: controller,
+                    child: PageView.builder(
+                      itemCount: 2,
+                      controller: Provider.of<FlashCardProvider>(context)
+                          .pageController,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (_, index) => const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: FlipCardWidget(),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: AppConst.kPadding,
+                  ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    clipBehavior: Clip.antiAlias,
+                    child: LinearProgressBar(
+                      backgroundColor: AppColor.kGreyColor,
+                      progressColor: AppColor.kPrimaryColor,
+                      minHeight: 25,
+                      progressType: LinearProgressBar.progressTypeLinear,
+                      currentStep: 0,
+                      maxSteps: 10,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      start: AppConst.kPadding * 2,
+                      bottom: AppConst.kPadding,
+                      top: AppConst.kPadding - 5,
+                    ),
+                    child: Text(
+                      "0/10",
+                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                            color: AppColor.kPrimaryTextColor,
+                          ),
                     ),
                   ),
                   SizedBox(
                     width: double.infinity,
                     child: TextButton(
-                      onPressed: () async {
-                        // _flipCard();
-                        await controller.flipCard();
+                      onPressed: () {
+                        Provider.of<FlashCardProvider>(context, listen: false)
+                            .flipCard();
                       },
                       style: TextButton.styleFrom(
                         backgroundColor: AppColor.kPrimaryColor,
@@ -82,13 +121,16 @@ class FlashCardScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(10),
                         ),
                       ),
-                      child: Text(
-                        "Flip card".toUpperCase(),
-                        style:
-                            Theme.of(context).textTheme.titleLarge?.copyWith(
-                                  color: AppColor.kSecondaryColor,
-                              letterSpacing: 2
-                                ),
+                      child: Selector<FlashCardProvider, String>(
+                        selector: (_, pr) => pr.flipButtonText,
+                        builder: (_, v, C) => Text(
+                          v.toUpperCase(),
+                          style:
+                              Theme.of(context).textTheme.titleLarge?.copyWith(
+                                    color: AppColor.kSecondaryColor,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                        ),
                       ),
                     ),
                   ),
