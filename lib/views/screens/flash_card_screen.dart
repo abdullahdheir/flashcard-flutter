@@ -19,7 +19,6 @@ class FlashCardScreen extends StatelessWidget {
     return SafeArea(
       bottom: false,
       child: Scaffold(
-        backgroundColor: Colors.white,
         body: Stack(
           children: [
             Container(
@@ -68,7 +67,7 @@ class FlashCardScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: PageView.builder(
-                      itemCount: 2,
+                      itemCount: Provider.of<FlashCardProvider>(context).listLength,
                       controller: Provider.of<FlashCardProvider>(context)
                           .pageController,
                       physics: const NeverScrollableScrollPhysics(),
@@ -89,8 +88,8 @@ class FlashCardScreen extends StatelessWidget {
                       progressColor: AppColor.kPrimaryColor,
                       minHeight: 25,
                       progressType: LinearProgressBar.progressTypeLinear,
-                      currentStep: 0,
-                      maxSteps: 10,
+                      currentStep: Provider.of<FlashCardProvider>(context).currentIndex,
+                      maxSteps: Provider.of<FlashCardProvider>(context).listLength,
                     ),
                   ),
                   Padding(
@@ -100,7 +99,7 @@ class FlashCardScreen extends StatelessWidget {
                       top: AppConst.kPadding - 5,
                     ),
                     child: Text(
-                      "0/10",
+                      "${Provider.of<FlashCardProvider>(context).currentIndex}/${Provider.of<FlashCardProvider>(context).listLength}",
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: AppColor.kPrimaryTextColor,
                           ),

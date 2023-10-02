@@ -1,9 +1,12 @@
+import 'package:flashcard/core/routes/links.dart';
+import 'package:flashcard/core/routes/navigator.dart';
 import 'package:flutter/material.dart';
 
 class FlashCardProvider extends ChangeNotifier {
   final pageController = PageController();
   late AnimationController animationController;
-
+  int listLength = 3;
+  int currentIndex = 1;
   bool isFlip = false;
   String flipButtonText = "flip card";
 
@@ -25,19 +28,31 @@ class FlashCardProvider extends ChangeNotifier {
   flipCard() {
     if (animationController.isAnimating) return;
     if (isFlip) {
-      _nextPage();
+      if (currentIndex == listLength ) {
+        goToFinishScreen();
+        return;
+      }
+        _nextPage();
+      currentIndex++;
       flipButtonText = "flip card";
       toggleFlipCard();
     } else {
       toggleFlipCard();
       _flipCard();
-      flipButtonText = "next card";
+      if (currentIndex == listLength) {
+        flipButtonText = "Finish";
+      } else {
+        flipButtonText = "next card";
+      }
     }
     notifyListeners();
   }
 
-  loadAnimationController(AnimationController controller)
-  {
+  loadAnimationController(AnimationController controller) {
     animationController = controller;
+  }
+
+  goToFinishScreen() {
+    AppRoute.toRouteAndReplace(AppLink.finishLearn);
   }
 }

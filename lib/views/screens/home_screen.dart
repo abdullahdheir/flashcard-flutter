@@ -1,3 +1,4 @@
+import 'package:flashcard/core/classes/colors.dart';
 import 'package:flashcard/core/classes/constants.dart';
 import 'package:flashcard/core/routes/links.dart';
 import 'package:flashcard/core/routes/navigator.dart';
@@ -10,6 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColor.kBackgroundColor,
       appBar: AppBar(
         title: const Text(
           "FlashCard",
@@ -28,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               child: GridView.builder(
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    mainAxisSpacing: AppConst.kPadding,
+                    mainAxisSpacing: AppConst.kPadding*.5,
                     crossAxisSpacing: AppConst.kPadding,
                     mainAxisExtent: 120,
                   ),

@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
                 color: Colors.white,
               ),
         ),
-        scaffoldBackgroundColor: AppColor.kBackgroundColor,
+        scaffoldBackgroundColor: AppColor.kSecondaryColor,
         colorScheme: ColorScheme.fromSeed(
           seedColor: Colors.transparent,
           primary: AppColor.kPrimaryColor,
