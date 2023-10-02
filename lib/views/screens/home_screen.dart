@@ -1,4 +1,6 @@
 import 'package:flashcard/core/classes/constants.dart';
+import 'package:flashcard/core/routes/links.dart';
+import 'package:flashcard/core/routes/navigator.dart';
 import 'package:flashcard/views/widgets/language_card_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -32,7 +34,9 @@ class HomeScreen extends StatelessWidget {
                   ),
                   itemCount: 10,
                   itemBuilder: (_, index) {
-                    return LanguageCardWidget(title:"Arabic",onTap:(){});
+                    return LanguageCardWidget(title:"Arabic",onTap:(){
+                      AppRoute.toRoute(AppLink.flashCard);
+                    });
                   }),
             ),
           ),
