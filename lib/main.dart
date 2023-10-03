@@ -1,10 +1,13 @@
 import 'package:flashcard/core/classes/colors.dart';
 import 'package:flashcard/core/routes/navigator.dart';
 import 'package:flashcard/core/routes/routes.dart';
+import 'package:flashcard/data/local/database.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await DatabaseHelper.createDatabase();
   runApp(const MyApp());
 }
 
