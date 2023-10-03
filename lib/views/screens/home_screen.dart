@@ -11,7 +11,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColor.kBackgroundColor,
+      backgroundColor: AppColor.kPrimaryColor,
       appBar: AppBar(
         title: const Text(
           "FlashCard",

@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
       navigatorKey: AppRoute.navKey,
       theme: ThemeData(
         appBarTheme: AppBarTheme(
-          backgroundColor: Colors.transparent,
+          backgroundColor: AppColor.kPrimaryColor,
           titleTextStyle: Theme.of(context).textTheme.headlineSmall?.copyWith(
                 color: Colors.white,
               ),

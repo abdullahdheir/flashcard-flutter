@@ -67,6 +67,7 @@ class FlashCardScreen extends StatelessWidget {
                   ),
                   Expanded(
                     child: PageView.builder(
+                      pageSnapping: false,
                       itemCount: Provider.of<FlashCardProvider>(context).listLength,
                       controller: Provider.of<FlashCardProvider>(context)
                           .pageController,

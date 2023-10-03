@@ -10,6 +10,7 @@ class LanguageCardWidget extends StatelessWidget {
     return InkWell(
       onTap:onTap,
       child: Card(
+        elevation: 7,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10),
         ),

@@ -25,7 +25,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
   void didChangeDependencies() {
     super.didChangeDependencies();
     flashCardProvider.loadAnimationController(AnimationController(
-      duration: const Duration(milliseconds: 800),
+      duration: const Duration(milliseconds: 500),
       vsync: this,
     ));
   }
@@ -44,7 +44,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
             flashCardProvider.animationController.value  *
                 -pi;
         final transform = Matrix4.identity()
-          ..setEntry(2, 3, 0.001)
+          ..setEntry(3, 2, 0.001)
           ..rotateY(angle);
         return Transform(
           transform: transform,
