@@ -28,11 +28,11 @@ class FlashCardProvider extends ChangeNotifier {
   flipCard() {
     if (animationController.isAnimating) return;
     if (isFlip) {
-      if (currentIndex == listLength ) {
+      if (currentIndex == listLength) {
         goToFinishScreen();
         return;
       }
-        _nextPage();
+      _nextPage();
       currentIndex++;
       flipButtonText = "flip card";
       toggleFlipCard();

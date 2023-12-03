@@ -4,19 +4,19 @@ import 'package:floor/floor.dart';
 
 @dao
 abstract class CardDao {
-
   @Query("SELECT * FROM ${FloorDatabaseTable.cardTableName}")
   Future<List<Card>> getAllLang();
 
   @Insert(onConflict: OnConflictStrategy.rollback)
-  Future<void> insertCard(Card card);
+  Future<int> insertCard(Card card);
 
   @Update(onConflict: OnConflictStrategy.replace)
-  Future<void> updateCard(Card card);
+  Future<int> updateCard(Card card);
 
   @delete
-  Future<void> deleteCard(Card card);
+  Future<int> deleteCard(Card card);
 
-  @Query("SELECT COUNT(id) FROM ${FloorDatabaseTable.cardTableName} WHERE lang_id = :id AND is_flip = false")
-  Future<int> isCompleteLearnLangCard(int id);
+  @Query(
+      "SELECT COUNT(id) FROM ${FloorDatabaseTable.cardTableName} WHERE lang_id = :id AND is_flip = false")
+  Future<int?> isCompleteLearnLangCard(int id);
 }

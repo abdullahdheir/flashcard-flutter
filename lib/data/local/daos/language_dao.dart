@@ -8,12 +8,12 @@ abstract class LanguageDao {
   Future<List<Language>> getAllLang();
 
   @Insert(onConflict: OnConflictStrategy.rollback)
-  Future<void> insertLanguage(Language language);
+  Future<int> insertLanguage(Language language);
 
   @Update(onConflict: OnConflictStrategy.replace)
-  Future<void> updateLanguage(Language language);
+  Future<int> updateLanguage(Language language);
 
   @delete
-  Future<void> deleteLanguage(Language language);
+  Future<int> deleteLanguage(Language language);
 
 }

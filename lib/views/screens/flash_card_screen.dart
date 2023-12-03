@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flashcard/core/classes/colors.dart';
 import 'package:flashcard/core/classes/constants.dart';
 import 'package:flashcard/core/routes/navigator.dart';
+import 'package:flashcard/data/local/entities/language.dart';
 import 'package:flashcard/providers/flash_card_provider.dart';
 import 'package:flashcard/views/widgets/flip_card_widget.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +16,7 @@ class FlashCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    log("from flash card build function");
+    final language = ModalRoute.of(context)?.settings.arguments as Language;
     return SafeArea(
       bottom: false,
       child: Scaffold(
@@ -26,8 +27,9 @@ class FlashCardScreen extends StatelessWidget {
               height: MediaQuery.of(context).size.height * .4,
               decoration: const BoxDecoration(
                 color: AppColor.kPrimaryColor,
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(40)),
+                borderRadius: BorderRadius.vertical(
+                  bottom: Radius.circular(40),
+                ),
               ),
             ),
             Padding(
@@ -53,7 +55,7 @@ class FlashCardScreen extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          "Learning the \nEnglish",
+                          "Learning the \n${language.name}",
                           style: Theme.of(context)
                               .textTheme
                               .displaySmall
@@ -68,7 +70,8 @@ class FlashCardScreen extends StatelessWidget {
                   Expanded(
                     child: PageView.builder(
                       pageSnapping: false,
-                      itemCount: Provider.of<FlashCardProvider>(context).listLength,
+                      itemCount:
+                          Provider.of<FlashCardProvider>(context).listLength,
                       controller: Provider.of<FlashCardProvider>(context)
                           .pageController,
                       physics: const NeverScrollableScrollPhysics(),
@@ -89,8 +92,10 @@ class FlashCardScreen extends StatelessWidget {
                       progressColor: AppColor.kPrimaryColor,
                       minHeight: 25,
                       progressType: LinearProgressBar.progressTypeLinear,
-                      currentStep: Provider.of<FlashCardProvider>(context).currentIndex,
-                      maxSteps: Provider.of<FlashCardProvider>(context).listLength,
+                      currentStep:
+                          Provider.of<FlashCardProvider>(context).currentIndex,
+                      maxSteps:
+                          Provider.of<FlashCardProvider>(context).listLength,
                     ),
                   ),
                   Padding(

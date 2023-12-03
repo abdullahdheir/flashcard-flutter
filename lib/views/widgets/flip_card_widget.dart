@@ -58,7 +58,7 @@ class _FlipCardWidgetState extends State<FlipCardWidget>
                 ),
         );
       },
-      animation: flashCardProvider!.animationController,
+      animation: flashCardProvider.animationController,
     );
   }
 }
